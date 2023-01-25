@@ -1,0 +1,53 @@
+employee
+id
+name
+
+interest
+id
+name
+
+employeeInterset
+id
+employeeId
+interestId
+
+
+Gift
+id
+name
+
+cateogries
+id
+name
+
+
+giftCateogry
+id
+giftId
+CatId
+
+
+get lower interest
+
+SELECT count(*) , interest_id
+FROM `employee_interest` 
+WHERE interest_id in (1,2,3)
+GROUP by interest_id
+
+order by COUNT(*) asc
+
+
+SELECT a.* , c.name
+FROM `employee` a
+LEFT join employee_interest b on b.employee_id = a.id
+left join interest c on c.id = b.interest_id
+WHERE a.id=1
+
+
+
+SELECT c.name
+FROM `category` a
+LEFt join gift_category b on b.category_id = a.id
+left join gift c on c.id = b.gift_id
+WHERE a.name in  ('high end audio', 'photography', 'sitting comfortably')
+limit 1
