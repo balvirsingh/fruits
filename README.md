@@ -46,7 +46,9 @@ mkdir -p migrations
 ./docker-php bin/console app:dump-data
 ```
 5. In browser application endpoint app can be opened (in route 1 is employee Id):
+```
 http://localhost:5000/employee/1/gift/assignment
+```
 
 5. In browser database app can be opened:
 ```
@@ -68,4 +70,3 @@ Please after using composer for install/require run the following command in you
 ```
 sudo chown -R $(id -u ${USER}):$(id -g ${USER}) .
 ```
-# everphone
