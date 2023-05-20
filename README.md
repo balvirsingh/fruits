@@ -28,6 +28,10 @@ Replace the ./docker-php with php
 
 ```
 docker-compose up
+
+or
+
+docker compose up
 ```
 
 2. In 2nd terminal tab: Composer install
@@ -58,10 +62,16 @@ mkdir -p migrations
 http://localhost:5000/fruit/list
 ```
 
-5. In browser database app can be opened, via phpmyadmin:
+6. In browser database app can be opened, via phpmyadmin:
 
 ```
 localhost:5001
+```
+
+7. In browser mail can be seen via mailhog
+
+```
+localhost:8025
 ```
 
 if its not working then run the following commands one by one:-
