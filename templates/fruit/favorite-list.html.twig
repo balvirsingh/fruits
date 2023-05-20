@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Favorite Fruit List</h1>
+
+    <table class="list-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Calories</th>
+                <th>Fat</th>
+                <th>Sugar</th>
+                <th>Carbohydrate</th>
+                <th>Protein</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for fruit in pagination %}
+                <tr>
+                    <td>{{ fruit.id }}</td>
+                    <td>{{ fruit.name }}</td>
+                    <td>{{ fruit.Calories }}</td>
+                    <td>{{ fruit.Fat }}</td>
+                    <td>{{ fruit.Sugar }}</td>
+                    <td>{{ fruit.carbohydrate }}</td>
+                    <td>{{ fruit.protein }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+
+    {{ knp_pagination_render(pagination) }}
+
+    
+{% endblock %}
+
+

@@ -1,22 +1,22 @@
 version: "3.5"
 
 services:
-  ev:
+  apache:
     build:
       context: ./
       target: base
-    container_name: ev_php
+    container_name: app_apache
     restart: always
     volumes:
       - ./:/var/www/html
     depends_on:
-      - ev_db
+      - database
     ports:
       - "5000:80"
 
-  ev_db:
+  database:
     image: mysql:8.0
-    container_name: ev_mysql
+    container_name: app_db
     command: --sql_mode='STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' --default-authentication-plugin=mysql_native_password
     volumes:
       - db_data:/var/lib/mysql
@@ -26,18 +26,25 @@ services:
       - MYSQL_CONNECTION=mysql
       - MYSQL_HOST=mysql
       - MYSQL_PORT=3306
-      - MYSQL_DATABASE=ev
+      - MYSQL_DATABASE=fruit
       - MYSQL_USERNAME=root
     ports:
       - "5307:3306"
       
-  ev_phpmyadmin:
+  phpmyadmin:
     image: phpmyadmin/phpmyadmin
-    container_name: ev_phpmyadmin
+    container_name: app_phpmyadmin
     environment:
-      - PMA_HOST=ev_db
+      - PMA_HOST=app_db
     restart: always
     ports:
       - 5001:80
+
+  mail:
+    image: mailhog/mailhog
+    container_name: mail_hog
+    ports: 
+      - 8025:8025 
+      
 volumes:
     db_data:

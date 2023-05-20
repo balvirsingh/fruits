@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Fruit List</h1>
+
+    <form action="{{ path('fruit_list') }}" method="GET">
+        <input type="text" name="name" value="{{ name }}" placeholder="Name">
+        <input type="text" name="family" value="{{ family }}" placeholder="Family">
+        <button type="submit">Search</button>
+    </form>
+
+    <table class="list-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Family</th>
+                <th>Order</th>
+                <th>Genus</th>
+                <th>Is favorite</th> 
+            </tr>
+        </thead>
+        <tbody>
+            {% for fruit in pagination %}
+                <tr>
+                    <td>{{ fruit.id }}</td>
+                    <td>{{ fruit.name }}</td>
+                    <td>{{ fruit.family }}</td>
+                    <td>{{ fruit.plantOrder }}</td>
+                    <td>{{ fruit.genus }}</td>
+                    <td><input type="checkbox" class="favorite-checkbox" data-id="{{ fruit.id }}" {% if fruit.isFavorite %}checked{% endif %}></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div style="display: none;" id="mark_favorite_route">{{ path('mark_favorite', {id: 0}) }}</div>
+
+    {{ knp_pagination_render(pagination) }}
+
+    
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('assets/js/fruit.js') }}"></script>
+{% endblock %}
+

@@ -6,21 +6,19 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
-use App\Service\DataDumpService;
+use App\Service\DumpFruitService;
 
 #[AsCommand(
-    name: 'app:dump-data',
-    description: 'Insert data to the database',
+    name: 'fruits:fetch',
+    description: 'Insert fruits to the database',
     hidden: false,
-    aliases: ['app:dump-data']
+    aliases: ['fruits:fetch']
 )]
-class DumpDataCommand extends Command
+class FruitFetchCommand extends Command
 {
-    private $dataDumpService;
-
-    public function __construct(DataDumpService $dataDumpService)
+    public function __construct(private DumpFruitService $dumpFruitService)
     {
-        $this->dataDumpService = $dataDumpService;
+        $this->dumpFruitService = $dumpFruitService;
 
         parent::__construct();
     }
@@ -33,16 +31,21 @@ class DumpDataCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $response = $this->dataDumpService->dumpData();
+
+        $response = $this->dumpFruitService->dumpFruits();
+        
         $status = $response['status'];
-        $employeeDataResponse = $response['employeeDataResponse'];
-        $giftDataResponse = $response['giftDataResponse'];
+        $response = $response['result'];
+        
         if (true === $status) {
-            $output->writeln("<info>".$employeeDataResponse."</info>");
-            $output->writeln("<info>".$giftDataResponse."</info>");
+            $output->writeln("<info>".$response."</info>");
+            $commandStatus = Command::SUCCESS;
+        } else {
+            $output->writeln("<error>".$response."</error>");
+            $commandStatus = Command::FAILURE;
         }
 
-        return Command::SUCCESS;
+        return $commandStatus;
 
         // or return this if some error happened during the execution
         // (it's equivalent to returning int(1))
